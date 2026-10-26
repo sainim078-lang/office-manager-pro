@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Office Manager Pro</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#18263c}
+header{background:#142d50;color:white;padding:18px}
+header h2{margin:0 0 5px}
+header small{color:#c6d6eb}
+nav{display:flex;overflow-x:auto;background:white;padding:10px;gap:7px;position:sticky;top:0}
+nav button{white-space:nowrap;background:#eaf0f8;color:#142d50}
+button{border:0;border-radius:9px;padding:11px 13px;font-weight:bold;cursor:pointer}
+button.active,.primary{background:#1769d2;color:white}
+main{padding:15px;max-width:900px;margin:auto}
+.card{background:white;border-radius:14px;padding:17px;margin-bottom:14px;box-shadow:0 2px 8px #0000000a}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:white;padding:16px;border-radius:12px}
+.stat strong{display:block;font-size:21px;margin-top:8px}
+label{display:block;margin:10px 0 5px;font-size:13px;font-weight:bold}
+input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}
+.item{padding:13px 0;border-bottom:1px solid #e5eaf0}
+.item:last-child{border:0}
+.muted{color:#64748b;font-size:13px}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.secondary{background:#eaf0f8;color:#142d50}
+.danger{background:#fee2e2;color:#991b1b}
+.hidden{display:none}
+h3{margin:0 0 12px}
+.badge{font-size:12px;background:#e0f2fe;padding:5px;border-radius:6px}
+</style>
+</head>
+<body>
+<header>
+<h2>Office Manager Pro</h2>
+<small>GST & Income Tax Office Management · V1 Demo</small>
+</header>
+<nav id="nav"></nav>
+<main id="app"></main>
+<script>
+const KEY="office_manager_pro_demo_v1";
+const tabs=["Dashboard","Clients","Fees","Payments","Tasks","Reports"];
+let data;
+try{data=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+if(!data)data={
+clients:[{id:1,name:"Sharma Traders",gst:"06ABCDE1234F1Z5",phone:"9876543210"}],
+fees:[{id:1,client:1,service:"GST Return",amount:1500,status:"Approved"}],
+payments:[],
+tasks:[{id:1,client:1,title:"File GSTR-3B",status:"Pending"}]
+};
+let page="Dashboard";
+const money=n=>"₹"+Number(n||0).toLocaleString("en-IN");
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
+const cname=id=>data.clients.find(c=>c.id==id)?.name||"Unknown Client";
+const options=()=>data.clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");
+const uid=()=>Date.now()+Math.floor(Math.random()*1000);
+const totalFees=()=>data.fees.filter(f=>f.status==="Approved").reduce((s,f)=>s+Number(f.amount),0);
+const totalPaid=()=>data.payments.reduce((s,p)=>s+Number(p.amount),0);
+function show(name){
+page=name;
+document.getElementById("nav").innerHTML=tabs.map(t=>`<button class="${t===name?"active":""}" onclick="show('${t}')">${t}</button>`).join("");
+let html="";
+if(name==="Dashboard"){
+html=`<h3>Office Dashboard</h3><div class="grid">
+<div class="stat">Clients<strong>${data.clients.length}</strong></div>
+<div class="stat">Approved Fees<strong>${money(totalFees())}</strong></div>
+<div class="stat">Collections<strong>${money(totalPaid())}</strong></div>
+<div class="stat">Outstanding<strong>${money(Math.max(0,totalFees()-totalPaid()))}</strong></div>
+</div><div class="card" style="margin-top:15px"><h3>Quick Actions</h3>
+<div class="actions"><button class="primary" onclick="show('Clients')">Manage Clients</button>
+<button class="secondary" onclick="show('Fees')">Create Fee</button>
+<button class="secondary" onclick="show('Payments')">Record Payment</button></div></div>`;
+}
+if(name==="Clients"){
+html=`<div class="card"><h3>Add Client</h3>
+<form onsubmit="addClient(event)">
+<label>Client / Business Name</label><input id="cn" required>
+<label>GSTIN / PAN</label><input id="cg">
+<label>Mobile Number</label><input id="cp">
+<br><br><button class="primary">Save Client</button></form></div>
+<div class="card"><h3>Client List</h3><input placeholder="Search clients..." oninput="filterItems(this.value,'clientList')">
+<div id="clientList">${data.clients.map(c=>`<div class="item" data-search="${esc((c.name+" "+c.gst+" "+c.phone).toLowerCase())}">
+<strong>${esc(c.name)}</strong><div class="muted">${esc(c.gst)} · ${esc(c.phone)}</div>
+<div class="actions"><button class="secondary" onclick="editClient(${c.id})">Edit</button>
+<button class="danger" onclick="deleteClient(${c.id})">Archive</button></div></div>`).join("")}</div></div>`;
+}
+if(name==="Fees"){
+html=`<div class="card"><h3>Create Fee Draft</h3>
+<form onsubmit="addFee(event)">
+<label>Client</label><select id="fc" required>${options()}</select>
+<label>Service</label><input id="fs" placeholder="GST Return / ITR / Audit" required>
+<label>Amount (₹)</label><input id="fa" type="number" min="1" step="0.01" required>
+<br><br><button class="primary">Create Draft</button></form></div>
+<div class="card"><h3>Fee Register</h3>${data.fees.map(f=>`<div class="item">
+<strong>${esc(cname(f.client))}</strong>
+<div class="muted">${esc(f.service)} · ${money(f.amount)}</div>
+<span class="badge">${esc(f.status)}</span>
+${f.status==="Draft"?`<div class="actions"><button class="primary" onclick="approveFee(${f.id})">Approve Fee</button></div>`:""}
+</div>`).join("")}</div>`;
+}
+if(name==="Payments"){
+html=`<div class="card"><h3>Record Payment</h3>
+<form onsubmit="addPayment(event)">
+<label>Client</label><select id="pc" required>${options()}</select>
+<label>Amount (₹)</label><input id="pa" type="number" min="1" step="0.01" required>
+<label>Payment Mode</label><select id="pm"><option>Cash</option><option>UPI</option><option>Bank</option><option>Cheque</option></select>
+<br><br><button class="primary">Save Receipt</button></form></div>
+<div class="card"><h3>Payment History</h3>${data.payments.map(p=>`<div class="item"><strong>${esc(cname(p.client))}</strong>
+<div class="muted">${money(p.amount)} · ${esc(p.mode)} · ${esc(p.date)}</div></div>`).join("")}</div>
+<div class="card"><small class="muted">V1 Demo: Payments are recorded as receipts. Service-wise allocation will be added in the full version.</small></div>`;
+}
+if(name==="Tasks"){
+html=`<div class="card"><h3>Create Task</h3>
+<form onsubmit="addTask(event)">
+<label>Client</label><select id="tc">${options()}</select>
+<label>Task Description</label><input id="tt" required placeholder="Prepare GSTR-1">
+<br><br><button class="primary">Add Task</button></form></div>
+<div class="card"><h3>Task List</h3>${data.tasks.map(t=>`<div class="item">
+<strong>${esc(t.title)}</strong><div class="muted">${esc(cname(t.client))}</div>
+<span class="badge">${esc(t.status)}</span>
+<div class="actions"><button class="secondary" onclick="toggleTask(${t.id})">${t.status==="Pending"?"Mark Completed":"Reopen"}</button></div>
+</div>`).join("")}</div>`;
+}
+if(name==="Reports"){
+html=`<div class="card"><h3>Office Summary</h3>
+<p>Total Clients: <b>${data.clients.length}</b></p>
+<p>Approved Fees: <b>${money(totalFees())}</b></p>
+<p>Collection: <b>${money(totalPaid())}</b></p>
+<p>Pending Tasks: <b>${data.tasks.filter(t=>t.status==="Pending").length}</b></p>
+<button class="primary" onclick="exportCSV()">Export Client Report (CSV)</button></div>
+<div class="card"><h3>Demo Data Backup</h3>
+<div class="actions"><button class="secondary" onclick="exportJSON()">Export JSON</button>
+<button class="danger" onclick="resetData()">Reset Demo</button></div></div>`;
+}
+document.getElementById("app").innerHTML=html;
+}
+function addClient(e){
+e.preventDefault();
+data.clients.push({id:uid(),name:cn.value.trim(),gst:cg.value.trim(),phone:cp.value.trim()});
+save();show("Clients");
+}
+function editClient(id){
+let c=data.clients.find(x=>x.id===id);
+let name=prompt("Client Name",c.name);
+if(name===null||!name.trim())return;
+c.name=name.trim();
+let phone=prompt("Mobile Number",c.phone);
+if(phone!==null)c.phone=phone.trim();
+save();show("Clients");
+}
+function deleteClient(id){
+if(data.fees.some(f=>f.client===id)||data.payments.some(p=>p.client===id)||data.tasks.some(t=>t.client===id)){
+alert("This client has linked records. Archiving will be available in the full version.");return;
+}
+if(confirm("Remove this demo client?")){
+data.clients=data.clients.filter(c=>c.id!==id);
+save();show("Clients");
+}
+}
+function addFee(e){
+e.preventDefault();
+data.fees.push({id:uid(),client:Number(fc.value),service:fs.value.trim(),amount:Number(fa.value),status:"Draft"});
+save();show("Fees");
+}
+function approveFee(id){
+let f=data.fees.find(x=>x.id===id);
+if(confirm("Approve this fee draft?")){f.status="Approved";save();show("Fees");}
+}
+function addPayment(e){
+e.preventDefault();
+data.payments.push({id:uid(),client:Number(pc.value),amount:Number(pa.value),mode:pm.value,date:new Date().toLocaleDateString("en-IN")});
+save();show("Payments");
+}
+function addTask(e){
+e.preventDefault();
+data.tasks.push({id:uid(),client:Number(tc.value),title:tt.value.trim(),status:"Pending"});
+save();show("Tasks");
+}
+function toggleTask(id){
+let t=data.tasks.find(x=>x.id===id);
+t.status=t.status==="Pending"?"Completed":"Pending";
+save();show("Tasks");
+}
+function filterItems(q,id){
+document.querySelectorAll("#"+id+" [data-search]").forEach(x=>{
+x.style.display=x.dataset.search.includes(q.toLowerCase())?"":"none";
+});
+}
+function download(name,text,type){
+let blob=new Blob([text],{type});
+let a=document.createElement("a");
+a.href=URL.createObjectURL(blob);a.download=name;a.click();
+setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function exportCSV(){
+let rows=[["Client","GSTIN","Mobile"],...data.clients.map(c=>[c.name,c.gst,c.phone])];
+let csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\r\n");
+download("clients.csv","\uFEFF"+csv,"text/csv");
+}
+function exportJSON(){
+download("office-demo.json",JSON.stringify(data,null,2),"application/json");
+}
+function resetData(){
+if(confirm("Delete all locally saved demo data?")){
+localStorage.removeItem(KEY);location.reload();
+}
+}
+show("Dashboard");
+</script>
+</body>
+</html>
