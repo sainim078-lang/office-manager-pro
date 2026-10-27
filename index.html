@@ -1,215 +1,114 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Office Manager Pro V2</title><style>
+:root{--ink:#17203f;--purple:#6d4ce6;--blue:#2863db;--line:#e7e9f6}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font:15px -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:radial-gradient(circle at 8% 26%,#e1f3ff 0,transparent 33%),radial-gradient(circle at 92% 15%,#f0e3ff 0,transparent 38%),#f6f8fe;min-height:100vh;padding-bottom:78px}
+header{background:linear-gradient(123deg,#132d58 0%,#354eab 48%,#8552e9 100%);color:white;padding:27px max(18px,calc((100vw - 1080px)/2));border-radius:0 0 30px 30px;box-shadow:0 13px 38px #3c4fb638;position:relative;overflow:hidden}
+header:after{content:"";position:absolute;width:280px;height:280px;border:1px solid #ffffff33;border-radius:50%;right:-75px;top:-155px;pointer-events:none}header h2{font-size:clamp(24px,4vw,34px);letter-spacing:-.9px;margin:0 0 6px;font-weight:800}header h2:before{content:'▣';display:inline-grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#ffffff2a;margin-right:12px;font-size:24px}header small{color:#e0e7ff;font-size:12px;letter-spacing:.3px}
+nav{position:fixed;bottom:0;left:0;right:0;top:auto;z-index:20;display:flex;justify-content:space-evenly;gap:3px;background:#152747;padding:9px max(6px,calc((100vw - 980px)/2));border-radius:22px 22px 0 0;box-shadow:0 -7px 26px #19295120;overflow-x:auto}nav button{flex:1;min-width:0;white-space:nowrap;font-size:11px;padding:11px 4px;border-radius:14px;background:transparent;color:#dce3fa;font-weight:600}nav button.on{background:linear-gradient(130deg,#7954e7,#4c55c6);color:white;box-shadow:0 4px 14px #151d7033}button{border:0;border-radius:11px;padding:12px 15px;font-weight:650;cursor:pointer;background:#edf0fc;color:#2b3974;transition:transform .15s,box-shadow .15s}button:active{transform:scale(.98)}button:disabled{opacity:.5}.primary{background:linear-gradient(110deg,#5e5ddd,#8660ec);color:white;box-shadow:0 4px 13px #6c5bdb38}.danger{background:#ffe8ef;color:#a02e53}main{max-width:1080px;padding:24px 16px;margin:auto}.card{background:#ffffffdf;backdrop-filter:blur(10px);border:1px solid #fff;border-radius:21px;padding:20px;margin:0 0 17px;box-shadow:0 7px 28px #304e9b0d}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.stat{background:linear-gradient(140deg,#fff,#f6f7ff);padding:17px;border:1px solid white;border-radius:20px;box-shadow:0 6px 20px #35418c0d;color:#59627e;font-size:13px;min-width:0}.stat b{display:block;font-size:clamp(18px,3vw,25px);color:#182347;letter-spacing:-.6px;margin-top:8px;overflow-wrap:anywhere}h3{font-size:20px;letter-spacing:-.5px;margin:0 0 15px}h4{margin:15px 0 9px}label{display:block;margin:14px 0 6px;font-size:13px;font-weight:700;color:#3a4361}input,select{width:100%;padding:13px 14px;border:1px solid #dce2f1;border-radius:12px;background:#fbfcff;color:#192443;font:inherit;outline:none}input:focus,select:focus{border-color:#8a78e6;box-shadow:0 0 0 3px #8367ea18}.item{padding:16px 0;border-bottom:1px solid #e9edf6;line-height:1.65}.item:last-child{border:0}.muted{color:#77809b;font-size:12px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.pill{display:inline-block;background:#ecebff;color:#4e46a2;padding:5px 9px;border-radius:20px;font-size:12px}.click{color:#5c4bc2;cursor:pointer;text-decoration:none}.click:hover{text-decoration:underline}.alertcard{display:block;text-align:left;background:linear-gradient(135deg,#fff,#f5f4ff);border:1px solid #e5e4f8;border-radius:17px;padding:16px;width:100%;font-size:13px;box-shadow:0 4px 14px #3c39920c}.alertcard b{display:block;font-size:26px;margin:8px 0}.alertcard.selected{border-color:#7660e3;background:#f0edff;box-shadow:0 5px 20px #6655cb1f}.alertlist{margin-top:15px}.warning{background:#fff5df;border-radius:12px;padding:14px}.good{background:#e7f9ef;border-radius:12px;padding:14px}.empty{color:#8490a5;padding:15px 0}.ledger{width:100%;border-collapse:collapse;font-size:12px}.ledger th,.ledger td{border-bottom:1px solid #e9eaf4;padding:12px 6px;text-align:left}.ledger th{color:#626e8a;background:#f7f8ff}.ledger th:nth-child(n+3),.ledger td:nth-child(n+3){text-align:right}details{margin:14px 0;background:#f8f7ff;padding:13px;border-radius:12px}summary{cursor:pointer;color:#5a4bc4;font-weight:700}small{line-height:1.5}
+.hero{margin:2px 0 21px;padding:19px 5px 5px}.hero h2{font-size:clamp(24px,4vw,32px);margin:0 0 6px;letter-spacing:-1px}.hero p{color:#77819e;margin:0}.quickgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0 25px}.quicktile{background:linear-gradient(145deg,#fff,#f9faff);border:1px solid #fff;box-shadow:0 8px 24px #344ca314;border-radius:21px;min-height:124px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:#182347;font-size:14px}.quicktile .tileicon{width:52px;height:52px;border-radius:17px;display:grid;place-items:center;font-size:25px;background:#e9f1ff}.quicktile:nth-child(5n+2) .tileicon{background:#def8eb}.quicktile:nth-child(5n+3) .tileicon{background:#e0f9f2}.quicktile:nth-child(5n+4) .tileicon{background:#f0e6ff}.quicktile:nth-child(5n+5) .tileicon{background:#fff0e3}.alerttiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.alerttile{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:10px;min-height:115px;border-radius:17px;padding:15px;text-align:left;background:#e8f9f2;color:#12613d;border:1px solid #c9ecdc}.alerttile strong{font-size:24px}.alerttile:nth-child(2){background:#ffedf1;color:#9b2947;border-color:#ffd0dc}.alerttile:nth-child(3){background:#fff2e6;color:#9c531d;border-color:#ffe0bd}.alerttile:nth-child(4){background:#f0ebff;color:#5941a9;border-color:#ddd2ff}.alerttile:nth-child(5){background:#e9f4ff;color:#1b5baf;border-color:#cfe6ff}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.quickgrid{grid-template-columns:repeat(5,minmax(0,1fr))}.alerttiles{grid-template-columns:repeat(5,minmax(0,1fr))}.quicktile{min-height:140px}main{padding:28px 24px}}@media(max-width:390px){nav button{font-size:10px;padding:10px 2px}.stat{padding:13px}.quicktile{min-height:110px}}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Office Manager Pro</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#18263c}
-header{background:#142d50;color:white;padding:18px}
-header h2{margin:0 0 5px}
-header small{color:#c6d6eb}
-nav{display:flex;overflow-x:auto;background:white;padding:10px;gap:7px;position:sticky;top:0}
-nav button{white-space:nowrap;background:#eaf0f8;color:#142d50}
-button{border:0;border-radius:9px;padding:11px 13px;font-weight:bold;cursor:pointer}
-button.active,.primary{background:#1769d2;color:white}
-main{padding:15px;max-width:900px;margin:auto}
-.card{background:white;border-radius:14px;padding:17px;margin-bottom:14px;box-shadow:0 2px 8px #0000000a}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:white;padding:16px;border-radius:12px}
-.stat strong{display:block;font-size:21px;margin-top:8px}
-label{display:block;margin:10px 0 5px;font-size:13px;font-weight:bold}
-input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}
-.item{padding:13px 0;border-bottom:1px solid #e5eaf0}
-.item:last-child{border:0}
-.muted{color:#64748b;font-size:13px}
-.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
-.secondary{background:#eaf0f8;color:#142d50}
-.danger{background:#fee2e2;color:#991b1b}
-.hidden{display:none}
-h3{margin:0 0 12px}
-.badge{font-size:12px;background:#e0f2fe;padding:5px;border-radius:6px}
-</style>
-</head>
-<body>
-<header>
-<h2>Office Manager Pro</h2>
-<small>GST & Income Tax Office Management · V1 Demo</small>
-</header>
-<nav id="nav"></nav>
-<main id="app"></main>
-<script>
-const KEY="office_manager_pro_demo_v1";
-const tabs=["Dashboard","Clients","Fees","Payments","Tasks","Reports"];
-let data;
-try{data=JSON.parse(localStorage.getItem(KEY))}catch(e){}
-if(!data)data={
-clients:[{id:1,name:"Sharma Traders",gst:"06ABCDE1234F1Z5",phone:"9876543210"}],
-fees:[{id:1,client:1,service:"GST Return",amount:1500,status:"Approved"}],
-payments:[],
-tasks:[{id:1,client:1,title:"File GSTR-3B",status:"Pending"}]
-};
-let page="Dashboard";
-const money=n=>"₹"+Number(n||0).toLocaleString("en-IN");
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
-const cname=id=>data.clients.find(c=>c.id==id)?.name||"Unknown Client";
-const options=()=>data.clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");
-const uid=()=>Date.now()+Math.floor(Math.random()*1000);
-const totalFees=()=>data.fees.filter(f=>f.status==="Approved").reduce((s,f)=>s+Number(f.amount),0);
-const totalPaid=()=>data.payments.reduce((s,p)=>s+Number(p.amount),0);
-function show(name){
-page=name;
-document.getElementById("nav").innerHTML=tabs.map(t=>`<button class="${t===name?"active":""}" onclick="show('${t}')">${t}</button>`).join("");
-let html="";
-if(name==="Dashboard"){
-html=`<h3>Office Dashboard</h3><div class="grid">
-<div class="stat">Clients<strong>${data.clients.length}</strong></div>
-<div class="stat">Approved Fees<strong>${money(totalFees())}</strong></div>
-<div class="stat">Collections<strong>${money(totalPaid())}</strong></div>
-<div class="stat">Outstanding<strong>${money(Math.max(0,totalFees()-totalPaid()))}</strong></div>
-</div><div class="card" style="margin-top:15px"><h3>Quick Actions</h3>
-<div class="actions"><button class="primary" onclick="show('Clients')">Manage Clients</button>
-<button class="secondary" onclick="show('Fees')">Create Fee</button>
-<button class="secondary" onclick="show('Payments')">Record Payment</button></div></div>`;
-}
-if(name==="Clients"){
-html=`<div class="card"><h3>Add Client</h3>
-<form onsubmit="addClient(event)">
-<label>Client / Business Name</label><input id="cn" required>
-<label>GSTIN / PAN</label><input id="cg">
-<label>Mobile Number</label><input id="cp">
-<br><br><button class="primary">Save Client</button></form></div>
-<div class="card"><h3>Client List</h3><input placeholder="Search clients..." oninput="filterItems(this.value,'clientList')">
-<div id="clientList">${data.clients.map(c=>`<div class="item" data-search="${esc((c.name+" "+c.gst+" "+c.phone).toLowerCase())}">
-<strong>${esc(c.name)}</strong><div class="muted">${esc(c.gst)} · ${esc(c.phone)}</div>
-<div class="actions"><button class="secondary" onclick="editClient(${c.id})">Edit</button>
-<button class="danger" onclick="deleteClient(${c.id})">Archive</button></div></div>`).join("")}</div></div>`;
-}
-if(name==="Fees"){
-html=`<div class="card"><h3>Create Fee Draft</h3>
-<form onsubmit="addFee(event)">
-<label>Client</label><select id="fc" required>${options()}</select>
-<label>Service</label><input id="fs" placeholder="GST Return / ITR / Audit" required>
-<label>Amount (₹)</label><input id="fa" type="number" min="1" step="0.01" required>
-<br><br><button class="primary">Create Draft</button></form></div>
-<div class="card"><h3>Fee Register</h3>${data.fees.map(f=>`<div class="item">
-<strong>${esc(cname(f.client))}</strong>
-<div class="muted">${esc(f.service)} · ${money(f.amount)}</div>
-<span class="badge">${esc(f.status)}</span>
-${f.status==="Draft"?`<div class="actions"><button class="primary" onclick="approveFee(${f.id})">Approve Fee</button></div>`:""}
-</div>`).join("")}</div>`;
-}
-if(name==="Payments"){
-html=`<div class="card"><h3>Record Payment</h3>
-<form onsubmit="addPayment(event)">
-<label>Client</label><select id="pc" required>${options()}</select>
-<label>Amount (₹)</label><input id="pa" type="number" min="1" step="0.01" required>
-<label>Payment Mode</label><select id="pm"><option>Cash</option><option>UPI</option><option>Bank</option><option>Cheque</option></select>
-<br><br><button class="primary">Save Receipt</button></form></div>
-<div class="card"><h3>Payment History</h3>${data.payments.map(p=>`<div class="item"><strong>${esc(cname(p.client))}</strong>
-<div class="muted">${money(p.amount)} · ${esc(p.mode)} · ${esc(p.date)}</div></div>`).join("")}</div>
-<div class="card"><small class="muted">V1 Demo: Payments are recorded as receipts. Service-wise allocation will be added in the full version.</small></div>`;
-}
-if(name==="Tasks"){
-html=`<div class="card"><h3>Create Task</h3>
-<form onsubmit="addTask(event)">
-<label>Client</label><select id="tc">${options()}</select>
-<label>Task Description</label><input id="tt" required placeholder="Prepare GSTR-1">
-<br><br><button class="primary">Add Task</button></form></div>
-<div class="card"><h3>Task List</h3>${data.tasks.map(t=>`<div class="item">
-<strong>${esc(t.title)}</strong><div class="muted">${esc(cname(t.client))}</div>
-<span class="badge">${esc(t.status)}</span>
-<div class="actions"><button class="secondary" onclick="toggleTask(${t.id})">${t.status==="Pending"?"Mark Completed":"Reopen"}</button></div>
-</div>`).join("")}</div>`;
-}
-if(name==="Reports"){
-html=`<div class="card"><h3>Office Summary</h3>
-<p>Total Clients: <b>${data.clients.length}</b></p>
-<p>Approved Fees: <b>${money(totalFees())}</b></p>
-<p>Collection: <b>${money(totalPaid())}</b></p>
-<p>Pending Tasks: <b>${data.tasks.filter(t=>t.status==="Pending").length}</b></p>
-<button class="primary" onclick="exportCSV()">Export Client Report (CSV)</button></div>
-<div class="card"><h3>Demo Data Backup</h3>
-<div class="actions"><button class="secondary" onclick="exportJSON()">Export JSON</button>
-<button class="danger" onclick="resetData()">Reset Demo</button></div></div>`;
-}
-document.getElementById("app").innerHTML=html;
-}
-function addClient(e){
-e.preventDefault();
-data.clients.push({id:uid(),name:cn.value.trim(),gst:cg.value.trim(),phone:cp.value.trim()});
-save();show("Clients");
-}
-function editClient(id){
-let c=data.clients.find(x=>x.id===id);
-let name=prompt("Client Name",c.name);
-if(name===null||!name.trim())return;
-c.name=name.trim();
-let phone=prompt("Mobile Number",c.phone);
-if(phone!==null)c.phone=phone.trim();
-save();show("Clients");
-}
-function deleteClient(id){
-if(data.fees.some(f=>f.client===id)||data.payments.some(p=>p.client===id)||data.tasks.some(t=>t.client===id)){
-alert("This client has linked records. Archiving will be available in the full version.");return;
-}
-if(confirm("Remove this demo client?")){
-data.clients=data.clients.filter(c=>c.id!==id);
-save();show("Clients");
-}
-}
-function addFee(e){
-e.preventDefault();
-data.fees.push({id:uid(),client:Number(fc.value),service:fs.value.trim(),amount:Number(fa.value),status:"Draft"});
-save();show("Fees");
-}
-function approveFee(id){
-let f=data.fees.find(x=>x.id===id);
-if(confirm("Approve this fee draft?")){f.status="Approved";save();show("Fees");}
-}
-function addPayment(e){
-e.preventDefault();
-data.payments.push({id:uid(),client:Number(pc.value),amount:Number(pa.value),mode:pm.value,date:new Date().toLocaleDateString("en-IN")});
-save();show("Payments");
-}
-function addTask(e){
-e.preventDefault();
-data.tasks.push({id:uid(),client:Number(tc.value),title:tt.value.trim(),status:"Pending"});
-save();show("Tasks");
-}
-function toggleTask(id){
-let t=data.tasks.find(x=>x.id===id);
-t.status=t.status==="Pending"?"Completed":"Pending";
-save();show("Tasks");
-}
-function filterItems(q,id){
-document.querySelectorAll("#"+id+" [data-search]").forEach(x=>{
-x.style.display=x.dataset.search.includes(q.toLowerCase())?"":"none";
-});
-}
-function download(name,text,type){
-let blob=new Blob([text],{type});
-let a=document.createElement("a");
-a.href=URL.createObjectURL(blob);a.download=name;a.click();
-setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-}
-function exportCSV(){
-let rows=[["Client","GSTIN","Mobile"],...data.clients.map(c=>[c.name,c.gst,c.phone])];
-let csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\r\n");
-download("clients.csv","\uFEFF"+csv,"text/csv");
-}
-function exportJSON(){
-download("office-demo.json",JSON.stringify(data,null,2),"application/json");
-}
-function resetData(){
-if(confirm("Delete all locally saved demo data?")){
-localStorage.removeItem(KEY);location.reload();
-}
-}
-show("Dashboard");
-</script>
-</body>
-</html>
+.chart-controls{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px}.chart-controls button{white-space:nowrap;font-size:12px;padding:10px}.chart-controls button.active{background:#6754db;color:white}
+.chart-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0}.chart-summary>div{padding:13px;background:#f4f4ff;border-radius:13px}.chart-summary b{display:block;font-size:20px;margin-top:5px;overflow-wrap:anywhere}.chart-summary small{color:#66718d}
+.chart-svg{width:100%;height:auto;background:#f8f9ff;border-radius:14px;border:1px solid #ecebfa}.chart-legend{font-size:12px;color:#69728f;margin:9px 0}.report-line{padding:12px 0;border-bottom:1px solid #e9eafa}.report-line header{all:unset;display:flex;justify-content:space-between;gap:8px}.report-track{height:9px;background:#e9eafb;border-radius:12px;margin-top:8px;overflow:hidden}.report-track div{height:100%;background:linear-gradient(90deg,#7562df,#35b7b1);border-radius:12px}.report-hint{font-size:12px;color:#71809c;line-height:1.6}
+@media(min-width:650px){.chart-summary{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style></head><body><header><h2>Office Manager Pro</h2><small>V2.5 · GST & Income Tax Office · Local Demo</small></header><nav id="nav"></nav><main id="app"></main><script>
+const KEY="office_manager_pro_v2";let data;try{data=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!data)data={clients:[{id:1,name:"Sharma Traders",gst:"06ABCDE1234F1Z5",phone:"9876543210"}],fees:[{id:2,client:1,service:"GST Return",amount:1500,date:"2026-10-01"}],payments:[],tasks:[{id:3,client:1,title:"File GSTR-3B",status:"Pending"}],alerts:[{id:4,client:1,note:"Call for GST fee payment",date:"2026-10-28",promise:"2026-10-30",done:false}]};data.alerts??=[];data.contacts??=[];data.staff??=['Staff 1','Staff 2','Staff 3'];data.allocations??=[];let page="Dashboard",currentClient=null,alertFilter="today",chartRange=30,chartTab="followups";
+const $=id=>document.getElementById(id),save=()=>localStorage.setItem(KEY,JSON.stringify(data)),uid=()=>Date.now()+Math.floor(Math.random()*100000),today=()=>new Date().toLocaleDateString('en-CA'),money=n=>"₹"+Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:2}),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])),client=id=>data.clients.find(c=>c.id==id),cname=id=>client(id)?.name||"Unknown Client",feeTotal=cid=>data.fees.filter(f=>cid==null||f.client==cid).reduce((s,f)=>s+Number(f.amount),0),paidTotal=cid=>data.payments.filter(p=>cid==null||p.client==cid).reduce((s,p)=>s+Number(p.amount),0);
+const opts=()=>data.clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");
+function picker(prefix){return `<label>Search Client (Name / GSTIN / Mobile)</label><input id="${prefix}search" placeholder="Type to find client" oninput="filterClients('${prefix}')" autocomplete="off"><label>Select Client</label><select id="${prefix}client" required onchange="if('${prefix}'==='p')refreshPaymentFeeOptions()">${opts()}</select>`}
+function filterClients(prefix){let q=$(prefix+"search").value.toLowerCase(),sel=$(prefix+"client"),match=data.clients.filter(c=>(c.name+" "+c.gst+" "+c.phone).toLowerCase().includes(q));sel.innerHTML=match.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");if(!match.length)sel.innerHTML='<option value="">No matching client</option>';if(prefix==='p')refreshPaymentFeeOptions()}
+function tabs(){let names=["Dashboard","Clients","Fees","Payments","Tasks","Alerts","Reports","Charts"];$("nav").innerHTML=names.map(n=>`<button class="${page===n?"on":""}" onclick="show('${n}')">${n}</button>`).join("")}
+function show(n){page=n;currentClient=null;render()}
+function render(){tabs();let html="";
+if(page==="Dashboard")html=`<div class="hero"><h2>Good Morning 👋</h2><p>Manage your office work beautifully & efficiently</p></div>${paymentChart()}<div class="grid"><div class="stat">👥 &nbsp; Clients<b>${data.clients.length}</b></div><div class="stat">💵 &nbsp; Total Fees<b>${money(feeTotal())}</b></div><div class="stat">💳 &nbsp; Total Paid<b>${money(paidTotal())}</b></div><div class="stat">📈 &nbsp; Outstanding<b>${money(feeTotal()-paidTotal())}</b></div></div><div class="quickgrid"><button class="quicktile" onclick="show('Clients')"><span class="tileicon">👥</span>Clients</button><button class="quicktile" onclick="show('Fees')"><span class="tileicon">💰</span>Add Fees</button><button class="quicktile" onclick="show('Payments')"><span class="tileicon">💳</span>Add Payment</button><button class="quicktile" onclick="show('Alerts')"><span class="tileicon">🕒</span>Follow-up / Promise</button><button class="quicktile" onclick="show('Tasks')"><span class="tileicon">📋</span>Tasks</button><button class="quicktile" onclick="show('Alerts')"><span class="tileicon">🔔</span>Alerts</button><button class="quicktile" onclick="show('Reports')"><span class="tileicon">📊</span>Reports</button></div><div class="card"><h3>🎯 &nbsp; Recovery Alerts</h3><div class="alerttiles">${[['today','📅',"Today's Follow-ups"],['missed','⏰','Missed Follow-ups'],['broken','⚠️','Broken Promises'],['old','🪙','6+ Months Outstanding'],['high','₹','₹10,000+ Outstanding']].map(([key,icon,label])=>`<button class="alerttile" onclick="alertFilter='${key}';show('Alerts')"><span>${icon} &nbsp; ${label}</span><strong>${alertRecords(key).length} →</strong></button>`).join('')}</div></div>`;
+if(page==="Clients")html=currentClient?clientDetail(currentClient):`<div class="card"><h3>Add Client</h3><form onsubmit="addClient(event)"><label>Client Name</label><input id="cn" required><label>GSTIN / PAN</label><input id="cg"><label>Mobile</label><input id="cp"><div class="actions"><button class="primary">Save Client</button></div></form></div><div class="card"><h3>Clients · Tap Name for Full Ledger</h3><input placeholder="Search name, GSTIN, mobile" oninput="searchList(this.value)"><div id="clientlist">${data.clients.map(c=>`<div class="item searchable" data-q="${esc((c.name+" "+c.gst+" "+c.phone).toLowerCase())}"><strong class="click" onclick="openClient(${c.id})">${esc(c.name)}</strong><div class="muted">${esc(c.gst)} · ${esc(c.phone)}</div><div class="muted">Fees ${money(feeTotal(c.id))} · Paid ${money(paidTotal(c.id))} · Balance ${money(feeTotal(c.id)-paidTotal(c.id))}</div><div class="actions"><button onclick="openClient(${c.id})">Open Ledger</button><button onclick="editClient(${c.id})">Edit</button></div></div>`).join("")}</div></div>`;
+if(page==="Fees")html=`<div class="card"><h3>Add Fees · Direct Entry (No Approval)</h3><form onsubmit="addFee(event)">${picker("f")}<label>Service / Particulars</label><input id="fs" required placeholder="GST Return / ITR / Audit"><label>Fee Date</label><input id="fd" type="date" value="${today()}" required><label>Amount (₹)</label><input id="fa" type="number" min="0.01" step=".01" required><details><summary>Optional: Set Promise / Follow-up</summary>${promiseFields("f")}</details><div class="actions"><button class="primary">Save Fee</button></div></form></div><div class="card"><h3>Fee Register</h3>${data.fees.slice().reverse().map(f=>`<div class="item"><b>${esc(cname(f.client))}</b><div>${esc(f.service)} · ${money(f.amount)}</div><small class="muted">${esc(f.date)}</small></div>`).join("")||'<div class="empty">No fees yet</div>'}</div>`;
+if(page==="Payments")html=`<div class="card"><h3>Add Payment</h3><form onsubmit="addPayment(event)">${picker("p")}<label>Payment Date</label><input id="pd" type="date" value="${today()}" required><label>Amount (₹)</label><input id="pa" type="number" min=".01" step=".01" required><label>Allocate to Fee (Optional)</label><select id="palloc"><option value="">Keep Unallocated</option></select><label>Mode</label><select id="pm"><option>Cash</option><option>UPI</option><option>Bank</option><option>Cheque</option></select><label>Reference / Note</label><input id="pn" placeholder="Optional"><details><summary>Optional: Set Promise / Follow-up</summary>${promiseFields("p")}</details><div class="actions"><button class="primary">Save Payment</button></div></form></div><div class="card"><h3>Payment History</h3>${data.payments.slice().reverse().map(p=>`<div class="item"><b>${esc(cname(p.client))}</b><div>${money(p.amount)} · ${esc(p.mode)}</div><small class="muted">${esc(p.date)} · ${esc(p.note)}</small></div>`).join("")||'<div class="empty">No payments yet</div>'}</div>`;
+if(page==="Tasks")html=`<div class="card"><h3>Add Task</h3><form onsubmit="addTask(event)">${picker("t")}<label>Assigned Staff</label><select id="tstaff">${data.staff.map(x=>`<option>${esc(x)}</option>`).join("")}</select><label>Task</label><input id="tt" required><div class="actions"><button class="primary">Save Task</button></div></form></div><div class="card"><h3>Tasks</h3>${data.tasks.map(t=>`<div class="item"><b>${esc(t.title)}</b><div class="muted">${esc(cname(t.client))} · ${esc(t.status)}</div><div class="actions"><button onclick="toggleTask(${t.id})">${t.status==="Pending"?"Mark Completed":"Reopen"}</button></div></div>`).join("")}</div>`;
+if(page==="Alerts")html=alertPage();
+if(page==="Charts")html=chartsPage();
+if(page==="Reports")html=`<div class="card"><h3>Client Balance Report</h3>${data.clients.map(c=>`<div class="item"><b>${esc(c.name)}</b><div>Fees ${money(feeTotal(c.id))} · Payments ${money(paidTotal(c.id))}</div><b>Net Balance ${money(feeTotal(c.id)-paidTotal(c.id))}</b></div>`).join("")}<div class="actions"><button class="primary" onclick="exportCSV()">Download CSV</button><button onclick="exportJSON()">Export Demo JSON</button></div></div><div class="card"><button class="danger" onclick="resetDemo()">Reset V2 Demo Data</button></div>`;
+$("app").innerHTML=html;if(page==="Payments")refreshPaymentFeeOptions()}
+
+function chartStart(){let d=new Date();d.setHours(0,0,0,0);if(chartRange===180)d.setMonth(d.getMonth()-6);else if(chartRange===365)d.setFullYear(d.getFullYear()-1);else d.setDate(d.getDate()-chartRange+1);return d}
+function chartDate(s){if(!s)return null;let d=new Date(String(s).slice(0,10)+"T12:00:00");return Number.isFinite(+d)?d:null}
+function chartRows(rows){let start=chartStart(),end=new Date();end.setHours(23,59,59,999);return rows.filter(r=>{let d=chartDate(r.date);return d&&d>=start&&d<=end})}
+function chartControls(){return `<div class="chart-controls">${[[30,"30 Days"],[60,"60 Days"],[90,"90 Days"],[180,"6 Months"],[365,"Yearly"]].map(([n,l])=>`<button class="${chartRange===n?'active':''}" onclick="chartRange=${n};render()">${l}</button>`).join("")}</div>`}
+function graph(){let start=chartStart(),days=Math.max(1,Math.ceil((new Date()-start)/86400000)),count=chartRange===30?6:chartRange===60?6:chartRange===90?9:chartRange===180?6:12;
+let f=Array(count).fill(0),p=Array(count).fill(0);
+for(let [rows,arr] of [[data.fees,f],[data.payments,p]])for(let r of rows){let d=chartDate(r.date);if(!d||d<start||d>new Date())continue;let i=Math.min(count-1,Math.floor((d-start)/86400000/days*count));arr[i]+=Number(r.amount)||0}
+let max=Math.max(1,...f,...p),left=56,right=688,top=24,bottom=180,step=(right-left)/(count-1),out='';
+for(let i=0;i<5;i++){let y=bottom-i*(bottom-top)/4,val=max*i/4;out+=`<line x1="${left}" y1="${y}" x2="${right}" y2="${y}" stroke="#e1e5f5" stroke-dasharray="4 5"/><text x="49" y="${y+4}" text-anchor="end" font-size="11" fill="#7985a3">${val>=100000?(val/100000).toFixed(1)+'L':val>=1000?Math.round(val/1000)+'k':Math.round(val)}</text>`}
+let pts=a=>a.map((v,i)=>[left+i*step,bottom-(bottom-top)*v/max]);
+let line=a=>a.map(([x,y],i)=>(i?'L':'M')+x.toFixed(1)+','+y.toFixed(1)).join(' ');
+let a=pts(f),b=pts(p);
+for(let [points,color,gradient,values,label] of [[a,'#7863df','feesFill',f,'Fees'],[b,'#2fb5a9','paymentsFill',p,'Receipts']]){
+let path=line(points),area=path+` L${points[points.length-1][0]},${bottom} L${points[0][0]},${bottom} Z`;
+out+=`<path d="${area}" fill="url(#${gradient})"/><path d="${path}" fill="none" stroke="${color}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+points.forEach(([x,y],i)=>{out+=`<circle cx="${x}" cy="${y}" r="4.5" fill="white" stroke="${color}" stroke-width="2.5"><title>${label}: ${money(values[i])}</title></circle>`})}
+for(let i=0;i<count;i++){let d=new Date(start);d.setDate(d.getDate()+Math.round((i+.5)*days/count));let lab=d.toLocaleDateString('en-IN',chartRange>=180?{month:'short'}:{day:'numeric',month:'short'});out+=`<text x="${left+i*step}" y="208" text-anchor="middle" font-size="10" fill="#78839f">${lab}</text>`}
+return `<svg class="chart-svg" viewBox="0 0 720 225" role="img" aria-label="Fees and payment receipts line chart"><defs><linearGradient id="feesFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7863df" stop-opacity=".22"/><stop offset="100%" stop-color="#7863df" stop-opacity="0"/></linearGradient><linearGradient id="paymentsFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2fb5a9" stop-opacity=".15"/><stop offset="100%" stop-color="#2fb5a9" stop-opacity="0"/></linearGradient></defs>${out}</svg>`}
+function paymentChart(){let f=chartRows(data.fees),p=chartRows(data.payments),ft=f.reduce((s,r)=>s+Number(r.amount||0),0),pt=p.reduce((s,r)=>s+Number(r.amount||0),0);
+return `<div class="card"><h3>📊 Fees & Payment Receipt Tracker</h3>${chartControls()}<div class="chart-summary"><div><small>Fees Added</small><b>${money(ft)}</b></div><div><small>Payments Received</small><b>${money(pt)}</b></div><div><small>Receipts Count</small><b>${p.length}</b></div><div><small>Receipts / Fees</small><b>${ft?Math.round(pt/ft*100)+'%':'—'}</b></div></div>${graph()}<div class="chart-legend">🟣 Fees Added &nbsp; 🟢 Payments Received</div><div class="report-hint">Based on dated entries in selected period. Receipts / Fees is not an invoice-wise recovery rate.</div></div>`}
+function chartLine(label,n,max,display){return `<div class="report-line"><header><span>${esc(label)}</span><b>${esc(display??String(n))}</b></header><div class="report-track"><div style="width:${max?Math.min(100,n/max*100):0}%"></div></div></div>`}
+function chartsPage(){let due=data.alerts.filter(a=>a.date&&a.date<=today()),contacted=due.filter(a=>a.done),missed=due.filter(a=>!a.done&&a.date<today()),pending=due.filter(a=>!a.done&&a.date===today());
+let choices=[["followups","Follow-ups"],["collections","Payment Modes"],["services","Services"],["outstanding","Outstanding"],["tasks","Tasks"],["alerts","Alert Types"]],html='';
+if(chartTab==="followups"){html=`<div class="chart-summary"><div><small>Due Contacts</small><b>${due.length}</b></div><div><small>Contacted</small><b>${contacted.length}</b></div><div><small>Missed</small><b>${missed.length}</b></div><div><small>Completion</small><b>${due.length?Math.round(contacted.length/due.length*100)+'%':'—'}</b></div></div>${chartLine('Marked Contacted',contacted.length,due.length)}${chartLine('Missed Contact',missed.length,due.length)}${chartLine('Today Pending',pending.length,due.length)}<p class="report-hint">Based on staff marking contacts complete; not independently verified. Rescheduling changes the due date in this demo.</p>`}
+if(chartTab==="collections"){let groups={};data.payments.forEach(p=>groups[p.mode||"Other"]=(groups[p.mode||"Other"]||0)+Number(p.amount||0));let max=Math.max(0,...Object.values(groups));html=Object.entries(groups).map(([k,n])=>chartLine(k,n,max,money(n))).join("")||'No payments recorded.'}
+if(chartTab==="services"){let groups={};data.fees.forEach(f=>groups[f.service||"Other"]=(groups[f.service||"Other"]||0)+Number(f.amount||0));let max=Math.max(0,...Object.values(groups));html=Object.entries(groups).sort((a,b)=>b[1]-a[1]).map(([k,n])=>chartLine(k,n,max,money(n))).join("")||'No fees recorded.'}
+if(chartTab==="outstanding"){let vals=data.clients.map(c=>[c.name,netOutstanding(c.id)]).sort((a,b)=>b[1]-a[1]),max=Math.max(0,...vals.map(v=>v[1]));html=vals.map(([k,n])=>chartLine(k,n,max,money(n))).join("")+`<p class="report-hint">6+ month aged balance (estimated): ${money(data.clients.reduce((s,c)=>s+oldOutstanding(c.id),0))}. Oldest-fee-first estimate; no invoice allocation yet.</p>`}
+if(chartTab==="tasks"){let completed=data.tasks.filter(t=>t.status==="Completed").length;html=chartLine("Completed",completed,data.tasks.length)+chartLine("Pending",data.tasks.length-completed,data.tasks.length)+`<p class="report-hint">Task completion rate: ${data.tasks.length?Math.round(completed/data.tasks.length*100)+'%':'—'}</p>`}
+if(chartTab==="alerts"){let cats=[["Today's Follow-ups","today"],["Missed Follow-ups","missed"],["Broken Promises","broken"],["6+ Months Outstanding","old"],["₹10,000+ Outstanding","high"]],max=Math.max(0,...cats.map(c=>alertRecords(c[1]).length));html=cats.map(([label,key])=>`<div onclick="alertFilter='${key}';show('Alerts')" style="cursor:pointer">${chartLine(label,alertRecords(key).length,max,alertRecords(key).length+' →')}</div>`).join("")}
+return `<div class="hero"><h2>Charts & Analytics 📈</h2><p>Collection trends and office performance</p></div>${paymentChart()}${advancedCharts()}<div class="card"><h3>📈 Reports & Insights</h3><div class="chart-controls">${choices.map(([key,label])=>`<button class="${chartTab===key?'active':''}" onclick="chartTab='${key}';render()">${label}</button>`).join("")}</div>${html}</div><div class="card"><h3>📁 Data Exports</h3><button class="primary" onclick="show('Reports')">Open Reports & CSV Export →</button></div>`}
+
+
+function allocatedToFee(fid){return data.allocations.filter(a=>a.feeId==fid).reduce((s,a)=>s+Number(a.amount||0),0)}
+function validAllocation(cid,fid,amount){let f=data.fees.find(f=>f.id==fid&&f.client==cid);if(!f||amount>Number(f.amount)-allocatedToFee(fid)+.001){alert('Amount exceeds this fee balance. Select Keep Unallocated.');return false}return true}
+function refreshPaymentFeeOptions(){let el=$('palloc'),cid=+$('pclient')?.value;if(!el)return;el.innerHTML='<option value="">Keep Unallocated</option>'+data.fees.filter(f=>f.client===cid&&f.amount>allocatedToFee(f.id)).map(f=>`<option value="${f.id}">${esc(f.service)} · Due ${money(f.amount-allocatedToFee(f.id))}</option>`).join('')}
+function unallocatedTotal(){return data.payments.reduce((s,p)=>s+Number(p.amount||0)-data.allocations.filter(a=>a.paymentId==p.id).reduce((t,a)=>t+Number(a.amount||0),0),0)}
+function advancedCharts(){
+let monthly={};for(let p of data.payments){let k=(p.date||'').slice(0,7);if(k)monthly[k]=(monthly[k]||0)+Number(p.amount||0)}
+let m=Object.entries(monthly).sort((a,b)=>a[0].localeCompare(b[0])),max=Math.max(0,...m.map(x=>x[1]));
+let h=`<div class="card"><h3>📅 Monthly Collection</h3>${m.map(([k,v])=>chartLine(k,v,max,money(v))).join('')||'<p class="report-hint">No payments yet.</p>'}</div>`;
+h+=`<div class="card"><h3>👥 Staff Follow-up & Tasks</h3>${data.staff.map(st=>{let a=data.alerts.filter(x=>(x.staff||data.staff[0])===st&&x.date&&x.date<=today()),done=a.filter(x=>x.done).length,t=data.tasks.filter(x=>(x.staff||data.staff[0])===st);return `<div class="report-line"><b>${esc(st)}</b><p class="report-hint">Due ${a.length} · Contacted ${done} · Tasks Completed ${t.filter(x=>x.status==='Completed').length}/${t.length}</p><div class="report-track"><div style="width:${a.length?done/a.length*100:0}%"></div></div></div>`}).join('')}<p class="report-hint">Older entries without staff assignment are attributed to Staff 1. Contacted is staff-reported.</p></div>`;
+let aging=[0,0,0,0];for(let c of data.clients){let rem=paidTotal(c.id);for(let f of data.fees.filter(x=>x.client===c.id).slice().sort((a,b)=>a.date.localeCompare(b.date))){let left=Math.max(0,Number(f.amount)-rem);rem=Math.max(0,rem-Number(f.amount));let d=chartDate(f.date),days=d?Math.max(0,Math.floor((new Date()-d)/86400000)):0;aging[days<=30?0:days<=60?1:days<=90?2:3]+=left}}
+h+=`<div class="card"><h3>🕒 Outstanding Aging</h3>${['0–30 Days','31–60 Days','61–90 Days','90+ Days'].map((x,i)=>chartLine(x,aging[i],Math.max(...aging),money(aging[i]))).join('')}<p class="report-hint">Estimated using oldest-fees-first; not exact invoice allocation.</p></div>`;
+let services={};for(let f of data.fees){let k=f.service||'Other';services[k]??={fees:0,allocated:0};services[k].fees+=Number(f.amount||0);services[k].allocated+=allocatedToFee(f.id)}
+h+=`<div class="card"><h3>🧾 Service-wise Collection</h3>${Object.entries(services).map(([k,v])=>`<div class="report-line"><b>${esc(k)}</b><p class="report-hint">Fees ${money(v.fees)} · Allocated ${money(v.allocated)} · Remaining ${money(v.fees-v.allocated)}</p><div class="report-track"><div style="width:${v.fees?Math.min(100,v.allocated/v.fees*100):0}%"></div></div></div>`).join('')||'No fees yet.'}<p class="report-hint">Unallocated payments: ${money(unallocatedTotal())}. Receipts are counted once.</p></div>`;
+let promises=data.alerts.filter(a=>a.promise),overdue=promises.filter(a=>a.promise<today()&&!a.done&&netOutstanding(a.client)>0);
+h+=`<div class="card"><h3>🤝 Promise & Recovery</h3><div class="chart-summary"><div><small>Promises</small><b>${promises.length}</b></div><div><small>Potential Broken</small><b>${overdue.length}</b></div><div><small>Contacts Logged</small><b>${data.contacts.length}</b></div><div><small>Outstanding</small><b>${money(data.clients.reduce((s,c)=>s+netOutstanding(c.id),0))}</b></div></div><p class="report-hint">Promise Kept and recovered amount cannot be reliably calculated without linking individual receipts to promises. These metrics are not fabricated.</p></div>`;
+h+=`<div class="card"><h3>📋 Client & Office Activity</h3><div class="chart-summary"><div><small>Clients</small><b>${data.clients.length}</b></div><div><small>Fee Entries</small><b>${data.fees.length}</b></div><div><small>Receipts</small><b>${data.payments.length}</b></div><div><small>Tasks</small><b>${data.tasks.length}</b></div></div></div>`;
+return h}
+
+function netOutstanding(cid){return Math.max(0,feeTotal(cid)-paidTotal(cid))}
+function oldOutstanding(cid){let fees=data.fees.filter(f=>f.client===cid).slice().sort((a,b)=>a.date.localeCompare(b.date));let remaining=Math.max(0,paidTotal(cid));let cutoff=new Date();cutoff.setMonth(cutoff.getMonth()-6);let boundary=cutoff.toLocaleDateString('en-CA');let old=0;for(let f of fees){let unpaid=Math.max(0,+f.amount-remaining);remaining=Math.max(0,remaining-(+f.amount));if(f.date<=boundary)old+=unpaid}return old}
+function alertRecords(kind){let t=today();if(kind==='today')return data.alerts.filter(a=>!a.done&&a.date===t).map(a=>({cid:a.client,alert:a}));if(kind==='missed')return data.alerts.filter(a=>!a.done&&a.date&&a.date<t).map(a=>({cid:a.client,alert:a}));if(kind==='broken')return data.alerts.filter(a=>!a.done&&a.promise&&a.promise<t&&netOutstanding(a.client)>0).map(a=>({cid:a.client,alert:a}));if(kind==='old')return data.clients.filter(c=>oldOutstanding(c.id)>0).map(c=>({cid:c.id,amount:oldOutstanding(c.id)}));if(kind==='high')return data.clients.filter(c=>netOutstanding(c.id)>10000).map(c=>({cid:c.id,amount:netOutstanding(c.id)}));return []}
+function alertPage(){let cats=[['today','Today’s Follow-ups','📅'],['missed','Missed Follow-ups','⚠️'],['old','6+ Months Outstanding','🕒'],['high','₹10,000+ Outstanding','💰'],['broken','Broken Promises','📌']];let selected=cats.find(c=>c[0]===alertFilter)||cats[0];let rows=alertRecords(alertFilter);return `<h3>Recovery & Fee Alerts</h3><p class="muted">Tap any alert type to see matching clients.</p><div class="grid">${cats.map(([key,label,emoji])=>`<button class="alertcard ${alertFilter===key?'selected':''}" onclick="setAlertFilter('${key}')"><span>${emoji} ${label}</span><b>${alertRecords(key).length}</b><small>View clients →</small></button>`).join('')}</div><div class="card" style="margin-top:13px"><h3>${selected[1]} (${rows.length})</h3>${rows.length?rows.map(r=>`<div class="item"><b class="click" onclick="openClient(${r.cid})">${esc(cname(r.cid))}</b><div class="muted">Outstanding: ${money(netOutstanding(r.cid))}${r.amount!=null?' · Category Amount: '+money(r.amount):''}</div>${r.alert?`<div>${esc(r.alert.note||'Follow-up')}</div><div class="muted">Promise: ${esc(r.alert.promise||'Not set')} · Next Contact: ${esc(r.alert.date||'Not set')}</div>`:''}<div class="actions"><button onclick="openClient(${r.cid})">Open Ledger</button><button onclick="openClientPayment(${r.cid})">Add Payment</button>${r.alert?`<button onclick="toggleAlert(${r.alert.id})">Mark Contacted</button><button onclick="rescheduleAlert(${r.alert.id})">Reschedule</button>`:`<button onclick="openClientPromise(${r.cid})">Add Follow-up</button>`}</div></div>`).join(''):'<div class="empty">No clients in this category right now.</div>'}</div><div class="card"><h3>Add Promise / Follow-up (No Fee Needed)</h3><form onsubmit="addAlert(event)">${picker('a')}${promiseFields('a',true)}<div class="actions"><button class="primary">Save Promise / Follow-up</button></div></form></div><div class="card"><h3>All Follow-up Records</h3>${data.alerts.slice().sort((a,b)=>(a.date||'9999').localeCompare(b.date||'9999')).map(a=>`<div class="item"><b class="click" onclick="openClient(${a.client})">${esc(cname(a.client))}</b> <span class="pill">${a.done?'Contacted':a.date&&a.date<today()?'Missed Contact':a.date===today()?'Today':'Open'}</span><div>${esc(a.note||'Follow-up')}</div><div class="muted">Promise: ${esc(a.promise||'Not set')} · Next Contact: ${esc(a.date||'Not set')}</div><div class="actions"><button onclick="toggleAlert(${a.id})">${a.done?'Reopen':'Mark Contacted'}</button><button onclick="rescheduleAlert(${a.id})">Reschedule</button></div></div>`).join('')||'<div class="empty">No follow-ups recorded.</div>'}</div><div class="card"><small class="muted">6+ months aging in this demo applies receipts to oldest fees first. Actual invoice-wise allocation will be added with the cloud accounting module. Alerts are calculated when the app is opened; no background push notifications yet.</small></div>`}
+function setAlertFilter(v){alertFilter=v;render()}
+function openClientPayment(cid){openClient(cid);quickPayment(cid)}
+function openClientPromise(cid){openClient(cid);quickAlert(cid)}
+function promiseFields(prefix,required=false){return `<label>Payment Promise Date (Optional)</label><input id="${prefix}promise" type="date"><label>Next Contact Date (Optional)</label><input id="${prefix}follow" type="date"><label>Assigned Staff</label><select id="${prefix}staff">${data.staff.map(x=>`<option>${esc(x)}</option>`).join("")}</select><label>Follow-up Remarks</label><input id="${prefix}note" placeholder="Client conversation / reminder">${required?'<small class="muted">Enter at least one date.</small>':''}`}
+function storePromise(prefix,cid){let promise=$(prefix+'promise')?.value||'',date=$(prefix+'follow')?.value||'',note=$(prefix+'note')?.value||'';if(promise||date)data.alerts.push({id:uid(),client:cid,promise,date,note,staff:$(prefix+'staff')?.value||data.staff[0],createdAt:new Date().toISOString(),done:false})}
+function clientDetail(cid){let c=client(cid);if(!c)return '';let entries=[...data.fees.filter(f=>f.client===cid).map(f=>({date:f.date,type:'Fee',part:f.service,debit:+f.amount,credit:0,id:f.id})),...data.payments.filter(p=>p.client===cid).map(p=>({date:p.date,type:'Payment',part:p.mode+(p.note?' · '+p.note:''),debit:0,credit:+p.amount,id:p.id}))].sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id);let bal=0;return `<div class="card"><button onclick="currentClient=null;render()">← All Clients</button><h3 style="margin-top:12px">${esc(c.name)}</h3><div class="muted">${esc(c.gst)} · ${esc(c.phone)}</div><div class="grid" style="margin-top:12px"><div class="stat">Total Fees<b>${money(feeTotal(cid))}</b></div><div class="stat">Payments<b>${money(paidTotal(cid))}</b></div></div><div class="good" style="margin-top:10px"><b>Net Ledger Balance: ${money(feeTotal(cid)-paidTotal(cid))}</b></div><div class="actions"><button class="primary" onclick="quickFee(${cid})">+ Add Fees</button><button class="primary" onclick="quickPayment(${cid})">+ Add Payment</button><button onclick="quickAlert(${cid})">+ Promise / Follow-up</button></div></div><div class="card"><h3>Full Client Ledger</h3><div style="overflow-x:auto"><table class="ledger"><thead><tr><th>Date</th><th>Particulars</th><th>Debit</th><th>Credit</th><th>Balance</th></tr></thead><tbody>${entries.map(e=>{bal+=e.debit-e.credit;return `<tr><td>${esc(e.date)}</td><td>${esc(e.type)}: ${esc(e.part)}</td><td>${e.debit?money(e.debit):'-'}</td><td>${e.credit?money(e.credit):'-'}</td><td>${money(bal)}</td></tr>`}).join('')||'<tr><td colspan="5">No entries</td></tr>'}</tbody></table></div></div><div class="card"><h3>Promise / Follow-up History</h3>${data.alerts.filter(a=>a.client===cid).map(a=>`<div class="item">${esc(a.note)}<div class="muted">Promise: ${esc(a.promise||'-')} · Follow-up: ${esc(a.date||'-')} · ${a.done?'Contacted':'Open'}</div></div>`).join('')||'<div class="empty">No promises</div>'}</div><div id="quick"></div>`}
+function openClient(cid){page='Clients';currentClient=cid;render()}
+function quickFee(cid){$('quick').innerHTML=`<div class="card"><h3>Add Fees · ${esc(cname(cid))}</h3><form onsubmit="addQuickFee(event,${cid})"><label>Particulars</label><input id="qfs" required><label>Date</label><input id="qfd" type="date" value="${today()}" required><label>Amount</label><input id="qfa" type="number" min=".01" step=".01" required><details><summary>Optional Promise / Follow-up</summary>${promiseFields('qf')}</details><div class="actions"><button class="primary">Save Fee</button></div></form></div>`;$('quick').scrollIntoView({behavior:'smooth'})}
+function quickPayment(cid){$('quick').innerHTML=`<div class="card"><h3>Add Payment · ${esc(cname(cid))}</h3><form onsubmit="addQuickPayment(event,${cid})"><label>Date</label><input id="qpd" type="date" value="${today()}" required><label>Amount</label><input id="qpa" type="number" min=".01" step=".01" required><label>Allocate to Fee (Optional)</label><select id="qpalloc"><option value="">Keep Unallocated</option>${data.fees.filter(f=>f.client===cid).map(f=>`<option value="${f.id}">${esc(f.service)} · Due ${money(Math.max(0,f.amount-allocatedToFee(f.id)))}</option>`).join("")}</select><label>Mode</label><select id="qpm"><option>Cash</option><option>UPI</option><option>Bank</option><option>Cheque</option></select><label>Note</label><input id="qpn"><details><summary>Optional Promise / Follow-up</summary>${promiseFields('qp')}</details><div class="actions"><button class="primary">Save Payment</button></div></form></div>`;$('quick').scrollIntoView({behavior:'smooth'})}
+function quickAlert(cid){$('quick').innerHTML=`<div class="card"><h3>Add Promise · ${esc(cname(cid))}</h3><form onsubmit="addQuickAlert(event,${cid})">${promiseFields('qa',true)}<div class="actions"><button class="primary">Save Promise / Follow-up</button></div></form></div>`;$('quick').scrollIntoView({behavior:'smooth'})}
+function addClient(e){e.preventDefault();data.clients.push({id:uid(),name:$('cn').value.trim(),gst:$('cg').value.trim(),phone:$('cp').value.trim()});save();render()}
+function editClient(cid){let c=client(cid),v=prompt('Client name',c.name);if(v===null||!v.trim())return;c.name=v.trim();v=prompt('Mobile',c.phone);if(v!==null)c.phone=v.trim();save();render()}
+function searchList(q){document.querySelectorAll('.searchable').forEach(el=>el.style.display=el.dataset.q.includes(q.toLowerCase())?'':'none')}
+function addFee(e){e.preventDefault();let cid=+$('fclient').value;if(!client(cid))return alert('Select a client');data.fees.push({id:uid(),client:cid,service:$('fs').value.trim(),amount:+$('fa').value,date:$('fd').value});storePromise('f',cid);save();render()}
+function addQuickFee(e,cid){e.preventDefault();data.fees.push({id:uid(),client:cid,service:$('qfs').value.trim(),amount:+$('qfa').value,date:$('qfd').value});storePromise('qf',cid);save();openClient(cid)}
+function addPayment(e){e.preventDefault();let cid=+$('pclient').value;if(!client(cid))return alert('Select a client');let pid=uid(),amount=+$('pa').value,fid=+$('palloc')?.value;if(fid&&!validAllocation(cid,fid,amount))return;data.payments.push({id:pid,client:cid,amount,date:$('pd').value,mode:$('pm').value,note:$('pn').value});if(fid)data.allocations.push({id:uid(),paymentId:pid,feeId:fid,amount});storePromise('p',cid);save();render()}
+function addQuickPayment(e,cid){e.preventDefault();let pid=uid(),amount=+$('qpa').value,fid=+$('qpalloc')?.value;if(fid&&!validAllocation(cid,fid,amount))return;data.payments.push({id:pid,client:cid,amount,date:$('qpd').value,mode:$('qpm').value,note:$('qpn').value});if(fid)data.allocations.push({id:uid(),paymentId:pid,feeId:fid,amount});storePromise('qp',cid);save();openClient(cid)}
+function addTask(e){e.preventDefault();let cid=+$('tclient').value;if(!client(cid))return alert('Select a client');data.tasks.push({id:uid(),client:cid,title:$('tt').value.trim(),staff:$('tstaff')?.value||data.staff[0],status:'Pending'});save();render()}
+function toggleTask(tid){let t=data.tasks.find(t=>t.id===tid);t.status=t.status==='Pending'?'Completed':'Pending';save();render()}
+function addAlert(e){e.preventDefault();let cid=+$('aclient').value;if(!client(cid))return alert('Select a client');if(!$('apromise').value&&!$('afollow').value)return alert('Enter Promise Date or Follow-up Date');storePromise('a',cid);save();render()}
+function addQuickAlert(e,cid){e.preventDefault();if(!$('qapromise').value&&!$('qafollow').value)return alert('Enter Promise Date or Follow-up Date');storePromise('qa',cid);save();openClient(cid)}
+function toggleAlert(aid){let a=data.alerts.find(a=>a.id===aid);a.done=!a.done;if(a.done){a.completedAt=new Date().toISOString();data.contacts.push({id:uid(),alertId:a.id,client:a.client,staff:a.staff||data.staff[0],date:today(),scheduledDate:a.date||'',result:'Contacted'})}else{a.completedAt=null;data.contacts=data.contacts.filter(c=>c.alertId!==aid)}save();render()}
+function rescheduleAlert(aid){let a=data.alerts.find(a=>a.id===aid),v=prompt('New next-contact date (YYYY-MM-DD)',a.date||today());if(v===null)return;if(!/^\d{4}-\d{2}-\d{2}$/.test(v)||Number.isNaN(Date.parse(v)))return alert('Enter valid date YYYY-MM-DD');a.history??=[];a.history.push({from:a.date||'',to:v,changedAt:new Date().toISOString()});a.date=v;a.done=false;save();render()}
+function dl(name,txt,type){let b=new Blob([txt],{type}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),3000)}
+function exportCSV(){let rows=[['Client','GSTIN','Mobile','Fees','Payments','Balance'],...data.clients.map(c=>[c.name,c.gst,c.phone,feeTotal(c.id),paidTotal(c.id),feeTotal(c.id)-paidTotal(c.id)])];dl('office-client-balances.csv','\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n'),'text/csv')}
+function exportJSON(){dl('office-manager-v2-demo.json',JSON.stringify(data,null,2),'application/json')}
+function resetDemo(){if(confirm('Delete all V2 demo data from this browser?')){localStorage.removeItem(KEY);location.reload()}}
+render();</script></body></html>
